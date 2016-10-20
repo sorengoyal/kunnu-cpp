@@ -160,9 +160,9 @@ int main(int argc, char *argv[])
 
   // File names for output
   char path[200];
-  sprinf(path,"/home/crg/Documents/TrialResultsDP_C%g_PHI%g/disp.xdmf",cohesion_random, phi_random);
+  sprintf(path,"/home/crg/Documents/TrialResultsDP_C%g_PHI%g/disp.xdmf",cohesion_random, phi_random);
   File file1(path);
-  sprinf(path,"/home/crg/Documents/TrialResultsDP_C%g_PHI%g/p.xdmf",cohesion_random, phi_random);
+  sprintf(path,"/home/crg/Documents/TrialResultsDP_C%g_PHI%g/p.xdmf",cohesion_random, phi_random);
   File file2(path);
 
   // Equivalent plastic strain for visualisation
