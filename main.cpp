@@ -159,8 +159,11 @@ int main(int argc, char *argv[])
 //  nonlinear_solver.parameters["report"]                = false;
 
   // File names for output
-  File file1("/home/crg/Documents/TrialResultsDP/disp.xdmf");
-  File file2("/home/crg/Documents/TrialResultsDP/p.xdmf");
+  char path[200];
+  sprinf(path,"/home/crg/Documents/TrialResultsDP_C%g_PHI%g/disp.xdmf",cohesion_random, phi_random);
+  File file1(path);
+  sprinf(path,"/home/crg/Documents/TrialResultsDP_C%g_PHI%g/p.xdmf",cohesion_random, phi_random);
+  File file2(path);
 
   // Equivalent plastic strain for visualisation
   CellFunction<double> eps_eq(mesh);
