@@ -1,0 +1,47 @@
+degree = 2
+elementA = VectorElement("Lagrange", triangle, degree)
+elementT = VectorElement("Quadrature", triangle, degree, 9)
+elementS = VectorElement("Quadrature", triangle, degree, 3)
+
+w = TestFunction(elementA)
+du = TrialFunction(elementA)
+
+u = Coefficient(elementA) # current displacement
+v = Coefficient(elementA) #velocity
+a = Coefficient(elementA) #accn
+
+f = Coefficient(elementA) # body force
+g = Coefficient(elementA) # surface traction
+t = Coefficient(elementT)  # vectorized tangent matrix
+s = Coefficient(elementS) # vectorized stress matrix
+
+u0 = Coefficient(elementA) # displacement prediction
+
+rho = Constant(triangle) # density
+beta = Constant(triangle) # beta-parameter in the Newmark time stepping
+dt = Constant(triangle) # time increment
+eta = Constant(triangle) # Damping
+
+def eps(u):
+    return as_vector([u[i].dx(i) for i in range(2)] + [u[i].dx(j) + u[j].dx(i) for i, j in [(0, 1)]])
+
+def sigma(s):
+    return as_matrix([[s[0], s[2]], [s[2], s[1]]])
+
+def tangent(t):
+    return as_matrix([[t[i*3 + j] for j in range(3)] for i in range(3)])
+    
+#def v_pred():             # velocity prediction
+#    return (v+(dt/2)*a)
+
+# Nonlinear elastoplastic dynamic equation after discretization (with a damping term)
+
+L = rho/(beta*dt**2)*inner(u-u0, w)*dx + inner(s, eps(w))*dx - inner(f, w)*dx - inner(g, w)*ds + eta*tr((grad(u)/2*beta*dt)+grad(v+(dt/2)*a)-(grad(u0)/2*beta*dt))*tr(grad(w))*dx      #damping
+
+#L = rho/(beta*dt**2)*inner(u-u0, w)*dx + inner(s, eps(w))*dx - inner(f, w)*dx - inner(g, w)*ds + eta*inner(((grad(u)/2*beta*dt)+grad(v+(dt/2)*a)-(grad(u0)/2*beta*dt)), grad(w))*dx      #damping
+
+# Jacobian (with the damping term)
+
+J = rho/(beta*dt**2)*inner(du, w)*dx + inner(eps(w), dot(tangent(t), eps(du)))*dx + eta*tr(grad(du)/2*beta*dt)*tr(grad(w))*dx    #damping
+#J = rho/(beta*dt**2)*inner(du, w)*dx + inner(eps(w), dot(tangent(t), eps(du)))*dx + eta*inner((grad(du)/2*beta*dt), grad(w))*dx    #damping
+
