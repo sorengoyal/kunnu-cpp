@@ -8,6 +8,6 @@ do
 	for PHI in $PHILIST
 	do
 		echo "Computing for COHESION=$C, PHI=$PHI,"
-		./a.out $C $PHI
+		./demo_wavetrial_pulseVM $C $PHI
 	done	
 done
