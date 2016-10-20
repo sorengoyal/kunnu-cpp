@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
   const double E = 500000.0; //5000000; //150000;  // N/m^2 or Pa
   const double nu = 0.35;
   double cohesion_random, phi_random;
-  sscanf(argv[1],"%g",&cohesion_random);
-  sscanf(argv[2],"%g",&phi_random);
+  sscanf(argv[1],"%lf",&cohesion_random);
+  sscanf(argv[2],"%lf",&phi_random);
   const double cohesion = cohesion_random;   // 16000 N/m^2 or Pa
   const double dilatancy_angle = phi_random;   // Radians --- this will be 20 degrees
   const double hardening_parameter = 100.0; //0.0001
@@ -160,16 +160,16 @@ int main(int argc, char *argv[])
 
   // File names for output
   char path[200];
-  sprintf(path,"/home/crg/Documents/TrialResultsDP_C%g_PHI%g/disp.xdmf",cohesion_random, phi_random);
+  sprintf(path,"/home/crg/Documents/TrialResultsDP_C%lf_PHI%lf/disp.xdmf",cohesion_random, phi_random);
   File file1(path);
-  sprintf(path,"/home/crg/Documents/TrialResultsDP_C%g_PHI%g/p.xdmf",cohesion_random, phi_random);
+  sprintf(path,"/home/crg/Documents/TrialResultsDP_C%lf_PHI%lf/p.xdmf",cohesion_random, phi_random);
   File file2(path);
 
   // Equivalent plastic strain for visualisation
   CellFunction<double> eps_eq(mesh);
 
   unsigned int step = 0;
-  unsigned int steps = 160;
+  unsigned int steps = 20;
 
   while (step < steps)
   {
