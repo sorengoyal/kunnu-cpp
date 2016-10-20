@@ -1,13 +1,13 @@
 N=10
-python rho_random_generator.py $N > rho.dat
-python e_random_generator.py $N > e.dat
-RHOLIST=`cat rho.dat`
-ELIST=`cat e.dat`
-for E in $ELIST
+python cohesion_random_generator.py $N > cohesion.dat
+python phi_random_generator.py $N > phi.dat
+COHESIONLIST=`cat cohesion.dat`
+PHILIST=`cat phi.dat`
+for C in $COHESIONLIST
 do
-	for RHO in $RHOLIST
+	for PHI in $PHILIST
 	do
-		echo "Computing for RHO=$RHO, E=$E"
-		python 1material_wave.py $RHO $E
+		echo "Computing for COHESION=$C, PHI=$PHI,"
+		./a.out $C $PHI
 	done	
 done

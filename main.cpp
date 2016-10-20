@@ -49,7 +49,7 @@ class BottomBoundary : public SubDomain
   { return x[1] < DOLFIN_EPS; }
 };
 
-int main()
+int main(int argc, char *argv[])
 {
   Timer timer("Total plasicity solver time");
   set_log_level(ERROR);
@@ -60,10 +60,13 @@ int main()
   // Young's modulus and Poisson's ratio
   const double E = 500000.0; //5000000; //150000;  // N/m^2 or Pa
   const double nu = 0.35;
-  const double cohesion = 25000.0;   // 16000 N/m^2 or Pa
-  const double dilatancy_angle = 0.35;   // Radians --- this will be 20 degrees
+  double cohesion_random, phi_random;
+  sscanf(argv[1],"%g",&cohesion_random);
+  sscanf(argv[2],"%g",&phi_random);
+  const double cohesion = cohesion_random;   // 16000 N/m^2 or Pa
+  const double dilatancy_angle = phi_random;   // Radians --- this will be 20 degrees
   const double hardening_parameter = 100.0; //0.0001
-  const double friction_angle = 0.35;   // Radians ----- this will be 20 degrees
+  const double friction_angle = dilatancy_angle;   // Radians ----- this will be 20 degrees
 
   // Temporal discretization
   double rho = 1750.0;   //3000   kg/m^3
