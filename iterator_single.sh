@@ -4,5 +4,6 @@ LIST=`cat cohesion_phi.dat`
 for L in $LIST
 do
 	echo "Computing for COHESION and PHI =$L,"
-	./demo_wavetrial_pulseVM $L
+        echo "mpirun -4 demo_wave2DPulseVM $L"
+	mpirun -n 4 demo_wavetrial_pulseVM $L
 done
