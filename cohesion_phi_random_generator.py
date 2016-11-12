@@ -2,7 +2,7 @@ import sys
 import numpy as np
 import os
 
-N = int(sys.argv[1])#Get the first command line argument
+N = 10
 f = open('xi_n.dat', 'w')
 g = open('cohesion_phi.dat','w')
 while (N > 0):
