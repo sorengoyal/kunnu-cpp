@@ -51,7 +51,7 @@ class BottomBoundary : public SubDomain
 
 int main(int argc, char *argv[])
 {
-  printf("%s\n%s\n", argv[1], argv[2]);
+  printf("argv[1]:%s\nargv[2]:%s\n", argv[1], argv[2]); 
   Timer timer("Total plasicity solver time");
   set_log_level(ERROR);
 
